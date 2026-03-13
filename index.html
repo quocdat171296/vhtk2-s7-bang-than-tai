@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nhân Vật</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f4ef;
+      --bg2: #eee9e0;
+      --white: #ffffff;
+      --ink: #2c2416;
+      --ink-muted: #a0937e;
+      --accent: #b07d3a;
+      --accent-light: #e8c98a;
+      --border: #ddd5c6;
+      --shadow-sm: 0 2px 8px rgba(44,36,22,0.07);
+      --shadow-md: 0 6px 24px rgba(44,36,22,0.12);
+      --shadow-lg: 0 16px 48px rgba(44,36,22,0.18);
+      --radius: 10px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 32px 24px;
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(20px, 4vw, 30px);
+      font-weight: 700;
+      color: var(--ink);
+    }
+    header p {
+      font-size: 13px;
+      color: var(--ink-muted);
+      margin-top: 4px;
+      letter-spacing: 0.4px;
+    }
+
+    /* TOOLBAR */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 14px 32px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 160px;
+      max-width: 280px;
+    }
+    .search-wrap svg {
+      position: absolute;
+      left: 10px; top: 50%; transform: translateY(-50%);
+      color: var(--ink-muted);
+      pointer-events: none;
+    }
+    .search-wrap input {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      padding: 8px 12px 8px 34px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-wrap input::placeholder { color: var(--ink-muted); }
+    .search-wrap input:focus { border-color: var(--accent); }
+
+    select.filter-type {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      padding: 8px 12px;
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    select.filter-type:focus { border-color: var(--accent); }
+
+    .count {
+      margin-left: auto;
+      font-size: 12px;
+      color: var(--ink-muted);
+      white-space: nowrap;
+    }
+
+    /* GRID */
+    .grid-wrap { padding: 28px 32px 48px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 20px;
+    }
+
+    /* CARD */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+      animation: fadeUp 0.35s ease both;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent-light);
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      background: var(--bg2);
+      position: relative;
+    }
+    .card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.3s;
+    }
+    .card:hover .card-img img { transform: scale(1.05); }
+
+    .card-img-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 40px; color: var(--border);
+    }
+
+    .zoom-hint {
+      position: absolute;
+      top: 8px; right: 8px;
+      background: rgba(255,255,255,0.9);
+      color: var(--accent);
+      font-size: 13px;
+      width: 28px; height: 28px;
+      border-radius: 5px;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.2s;
+      pointer-events: none; font-weight: bold;
+    }
+    .card:hover .zoom-hint { opacity: 1; }
+
+    .card-body { padding: 12px 14px 14px; }
+    .card-type {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 3px;
+    }
+    .card-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px; font-weight: 600;
+      color: var(--ink); line-height: 1.3;
+    }
+
+    /* STATE */
+    .state-msg {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 64px 24px;
+      color: var(--ink-muted);
+    }
+    .state-msg .icon { font-size: 40px; margin-bottom: 12px; opacity: 0.4; }
+    .state-msg p { font-size: 15px; }
+    .state-msg small { display: block; margin-top: 6px; font-size: 12px; opacity: 0.7; }
+    .state-msg code {
+      background: var(--bg2); border-radius: 4px;
+      padding: 2px 6px; font-size: 12px; color: var(--accent);
+    }
+
+    /* LIGHTBOX */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 100;
+      background: rgba(30,22,10,0.88);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s;
+      backdrop-filter: blur(6px);
+      overflow: hidden;
+    }
+    .lightbox.open { opacity: 1; pointer-events: all; }
+
+    /* scrollable image viewport */
+    .lb-viewport {
+      flex: 1;
+      width: 100%;
+      overflow: auto;
+      display: flex; align-items: center; justify-content: center;
+      cursor: grab;
+    }
+    .lb-viewport.dragging { cursor: grabbing; }
+
+    .lb-viewport img {
+      display: block;
+      /* size controlled by JS via width */
+      max-width: none;
+      border-radius: 8px;
+      box-shadow: var(--shadow-lg);
+      transform-origin: center center;
+      transition: width 0.18s ease;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* bottom bar: caption + controls */
+    .lb-bar {
+      flex-shrink: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 20px;
+      background: rgba(15,10,0,0.55);
+      backdrop-filter: blur(4px);
+    }
+
+    .lightbox-caption {
+      color: rgba(255,255,255,0.9);
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .lightbox-caption span {
+      display: inline-block; margin-left: 8px;
+      font-family: 'Lato', sans-serif;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--accent-light); vertical-align: middle;
+    }
+
+    .lb-controls {
+      display: flex; align-items: center; gap: 6px;
+      flex-shrink: 0;
+    }
+    .lb-btn {
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 6px;
+      color: #fff;
+      font-family: 'Lato', sans-serif;
+      font-size: 16px; font-weight: 700;
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background 0.15s;
+      line-height: 1;
+    }
+    .lb-btn:hover { background: rgba(255,255,255,0.22); }
+    .lb-btn:active { background: rgba(255,255,255,0.30); }
+
+    .lb-scale-label {
+      color: rgba(255,255,255,0.5);
+      font-size: 12px;
+      min-width: 38px;
+      text-align: center;
+      font-family: 'Lato', sans-serif;
+    }
+
+    .lb-btn-close {
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 6px;
+      color: #fff;
+      font-family: 'Lato', sans-serif;
+      font-size: 12px; font-weight: 700;
+      padding: 0 14px; height: 36px;
+      display: flex; align-items: center;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      transition: background 0.15s;
+    }
+    .lb-btn-close:hover { background: rgba(255,255,255,0.22); }
+
+    /* RESPONSIVE */
+    @media (max-width: 540px) {
+      header { padding: 20px 16px 16px; }
+      .toolbar { padding: 12px 16px; }
+      .grid-wrap { padding: 16px 16px 40px; }
+      .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Danh Sách Nhân Vật</h1>
+  <p id="headerSub">Đang tải dữ liệu…</p>
+</header>
+
+<div class="toolbar">
+  <div class="search-wrap">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+    <input type="text" id="searchInput" placeholder="Tìm tên…" oninput="render()" />
+  </div>
+  <select class="filter-type" id="filterType" onchange="render()">
+    <option value="">Tất cả</option>
+  </select>
+  <span class="count" id="countLabel"></span>
+</div>
+
+<div class="grid-wrap">
+  <div class="grid" id="grid">
+    <div class="state-msg">
+      <div class="icon">⏳</div>
+      <p>Đang tải…</p>
+    </div>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <!-- click on backdrop closes -->
+  <div class="lb-backdrop" id="lbBackdrop" style="position:absolute;inset:0;z-index:0;" onclick="closeLightbox()"></div>
+
+  <div class="lb-viewport" id="lbViewport" style="position:relative;z-index:1;">
+    <img id="lbImg" src="" alt="" draggable="false" />
+  </div>
+
+  <div class="lb-bar" style="position:relative;z-index:1;">
+    <div class="lightbox-caption" id="lbCaption"></div>
+    <div class="lb-controls">
+      <button class="lb-btn" id="lbZoomOut" title="Thu nhỏ (−)">−</button>
+      <span class="lb-scale-label" id="lbScaleLabel">100%</span>
+      <button class="lb-btn" id="lbZoomIn"  title="Phóng to (+)">+</button>
+      <button class="lb-btn" id="lbReset"   title="Đặt lại (0)" style="font-size:12px;">↺</button>
+      <button class="lb-btn-close" onclick="closeLightbox()">✕ Đóng</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let allChars = [];
+
+  // ── CSV PARSER ────────────────────────────────────────────────
+  function parseCSV(text) {
+    const lines = text.trim().split(/\r?\n/);
+    if (lines.length < 2) return [];
+    const header = lines[0].split(',').map(h => h.trim().toLowerCase());
+    const iName = header.indexOf('name');
+    const iType = header.indexOf('type');
+    const iImg  = header.indexOf('image');
+    if (iName === -1) return [];
+    return lines.slice(1).map(line => {
+      const cols = splitCSVLine(line);
+      return {
+        name:  (cols[iName]  || '').trim(),
+        type:  iType >= 0 ? (cols[iType]  || '').trim() : '',
+        image: iImg  >= 0 ? (cols[iImg]   || '').trim() : '',
+      };
+    }).filter(r => r.name);
+  }
+
+  function splitCSVLine(line) {
+    const res = []; let cur = '', inQ = false;
+    for (const c of line) {
+      if (c === '"') inQ = !inQ;
+      else if (c === ',' && !inQ) { res.push(cur); cur = ''; }
+      else cur += c;
+    }
+    res.push(cur);
+    return res;
+  }
+
+  // ── FETCH CSV ─────────────────────────────────────────────────
+  async function init() {
+    try {
+      const res = await fetch('data.csv');
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const text = await res.text();
+      allChars = parseCSV(text);
+      rebuildFilter();
+      const types = getTypes();
+      document.getElementById('headerSub').textContent =
+        allChars.length + ' nhân vật' + (types.length ? ' · ' + types.length + ' loại' : '');
+      render();
+    } catch (e) {
+      document.getElementById('headerSub').textContent = 'Không thể tải dữ liệu';
+      document.getElementById('grid').innerHTML = `
+        <div class="state-msg">
+          <div class="icon">⚠️</div>
+          <p>Không tìm thấy file dữ liệu</p>
+          <small>Đặt file <code>data.csv</code> cùng thư mục với <code>index.html</code></small>
+        </div>`;
+    }
+  }
+
+  // ── FILTER ────────────────────────────────────────────────────
+  function getTypes() {
+    return [...new Set(allChars.map(c => c.type).filter(Boolean))].sort();
+  }
+
+  function rebuildFilter() {
+    const sel = document.getElementById('filterType');
+    sel.innerHTML = '<option value="">Tất cả</option>';
+    getTypes().forEach(t => {
+      const o = document.createElement('option');
+      o.value = t; o.textContent = t;
+      sel.appendChild(o);
+    });
+  }
+
+  // ── RENDER ────────────────────────────────────────────────────
+  function esc(s) {
+    return String(s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function render() {
+    const q  = document.getElementById('searchInput').value.trim().toLowerCase();
+    const ft = document.getElementById('filterType').value;
+
+    const list = allChars.filter(c => {
+      const mQ = !q || c.name.toLowerCase().includes(q) || c.type.toLowerCase().includes(q);
+      const mT = !ft || c.type === ft;
+      return mQ && mT;
+    });
+
+    document.getElementById('countLabel').textContent =
+      allChars.length ? list.length + ' / ' + allChars.length + ' nhân vật' : '';
+
+    const grid = document.getElementById('grid');
+    grid.innerHTML = '';
+
+    if (!list.length) {
+      grid.innerHTML = `<div class="state-msg"><div class="icon">🔍</div><p>Không tìm thấy kết quả</p><small>Thử thay đổi từ khoá hoặc bộ lọc</small></div>`;
+      return;
+    }
+
+    list.forEach((c, i) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.style.animationDelay = Math.min(i * 35, 400) + 'ms';
+
+      const imgHtml = c.image
+        ? `<img src="${esc(c.image)}" alt="${esc(c.name)}" loading="lazy"
+             onerror="this.parentElement.innerHTML='<div class=card-img-placeholder>👤</div>'" />`
+        : `<div class="card-img-placeholder">👤</div>`;
+
+      const zoomHint = c.image ? `<div class="zoom-hint">⤢</div>` : '';
+
+      card.innerHTML = `
+        <div class="card-img">${imgHtml}${zoomHint}</div>
+        <div class="card-body">
+          ${c.type ? `<div class="card-type">${esc(c.type)}</div>` : ''}
+          <div class="card-name">${esc(c.name)}</div>
+        </div>`;
+
+      if (c.image) card.addEventListener('click', () => openLightbox(c));
+      grid.appendChild(card);
+    });
+  }
+
+  // ── LIGHTBOX ──────────────────────────────────────────────────
+  const ZOOM_STEP = 0.25;
+  const ZOOM_MIN  = 0.25;
+  const ZOOM_MAX  = 4;
+  let lbScale = 1;
+  let lbBaseW = 0; // natural fit width at scale=1
+
+  function openLightbox(c) {
+    const img = document.getElementById('lbImg');
+    img.src = c.image;
+    document.getElementById('lbCaption').innerHTML =
+      esc(c.name) + (c.type ? `<span>${esc(c.type)}</span>` : '');
+
+    // wait for image to load so we know its natural size
+    img.onload = () => {
+      lbScale = 1;
+      fitImage();
+      updateScaleLabel();
+    };
+    // if already cached
+    if (img.complete && img.naturalWidth) {
+      lbScale = 1; fitImage(); updateScaleLabel();
+    }
+
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function fitImage() {
+    const vp = document.getElementById('lbViewport');
+    const img = document.getElementById('lbImg');
+    // available area (viewport minus bar ~60px is already excluded by flex)
+    const availW = vp.clientWidth  - 40;
+    const availH = vp.clientHeight - 40;
+    const natW = img.naturalWidth  || 800;
+    const natH = img.naturalHeight || 600;
+    const ratio = Math.min(availW / natW, availH / natH, 1);
+    lbBaseW = natW * ratio;
+    applyScale();
+  }
+
+  function applyScale() {
+    const img = document.getElementById('lbImg');
+    img.style.width = (lbBaseW * lbScale) + 'px';
+  }
+
+  function updateScaleLabel() {
+    document.getElementById('lbScaleLabel').textContent =
+      Math.round(lbScale * 100) + '%';
+  }
+
+  function zoomBy(delta) {
+    lbScale = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, lbScale + delta));
+    applyScale();
+    updateScaleLabel();
+  }
+
+  function resetZoom() {
+    lbScale = 1;
+    applyScale();
+    updateScaleLabel();
+    // re-center
+    const vp = document.getElementById('lbViewport');
+    vp.scrollTop = 0; vp.scrollLeft = 0;
+  }
+
+  document.getElementById('lbZoomIn') .addEventListener('click', () => zoomBy(+ZOOM_STEP));
+  document.getElementById('lbZoomOut').addEventListener('click', () => zoomBy(-ZOOM_STEP));
+  document.getElementById('lbReset')  .addEventListener('click', resetZoom);
+
+  // mouse wheel zoom
+  document.getElementById('lbViewport').addEventListener('wheel', e => {
+    e.preventDefault();
+    zoomBy(e.deltaY < 0 ? +ZOOM_STEP : -ZOOM_STEP);
+  }, { passive: false });
+
+  // drag-to-pan
+  (() => {
+    const vp = document.getElementById('lbViewport');
+    let drag = false, startX, startY, scrollX, scrollY;
+    vp.addEventListener('mousedown', e => {
+      drag = true; vp.classList.add('dragging');
+      startX = e.clientX; startY = e.clientY;
+      scrollX = vp.scrollLeft; scrollY = vp.scrollTop;
+    });
+    window.addEventListener('mousemove', e => {
+      if (!drag) return;
+      vp.scrollLeft = scrollX - (e.clientX - startX);
+      vp.scrollTop  = scrollY - (e.clientY - startY);
+    });
+    window.addEventListener('mouseup', () => { drag = false; vp.classList.remove('dragging'); });
+
+    // touch pan
+    let t0;
+    vp.addEventListener('touchstart', e => {
+      if (e.touches.length === 1) {
+        t0 = e.touches[0];
+        scrollX = vp.scrollLeft; scrollY = vp.scrollTop;
+      }
+    }, { passive: true });
+    vp.addEventListener('touchmove', e => {
+      if (e.touches.length === 1 && t0) {
+        vp.scrollLeft = scrollX - (e.touches[0].clientX - t0.clientX);
+        vp.scrollTop  = scrollY - (e.touches[0].clientY - t0.clientY);
+      }
+    }, { passive: true });
+
+    // pinch-to-zoom
+    let initDist = 0, initScale = 1;
+    vp.addEventListener('touchstart', e => {
+      if (e.touches.length === 2) {
+        initDist  = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        initScale = lbScale;
+      }
+    }, { passive: true });
+    vp.addEventListener('touchmove', e => {
+      if (e.touches.length === 2) {
+        const dist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        lbScale = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, initScale * (dist / initDist)));
+        applyScale(); updateScaleLabel();
+      }
+    }, { passive: true });
+  })();
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+    lbScale = 1;
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  init();
+</script>
+</body>
+</html>
