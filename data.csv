@@ -1,6 +1,2 @@
-name,type,image
-Kiều Phong,Cái Bang,images/kieu-phong.jpg
-Lệnh Hồ Xung,Hoa Sơn Phái,images/lenh-ho-xung.jpg
-Trương Vô Kỵ,Minh Giáo,images/truong-vo-ky.jpg
-Hoàng Dung,Cái Bang,images/hoang-dung.jpg
-Tiểu Long Nữ,Cổ Mộ Phái,images/tieu-long-nu.jpg
+name,type,image,link
+Throne,Võ Đang Kiếm,images/Throne.jpg,https://facebook.com/kieubang
