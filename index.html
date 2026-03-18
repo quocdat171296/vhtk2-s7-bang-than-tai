@@ -7,40 +7,37 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Ma+Shan+Zheng&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
   <style>
-    /* ═══════════════════════════════════════════
+    /* ═══════════════════════════
        TOKENS
-    ═══════════════════════════════════════════ */
+    ═══════════════════════════ */
     :root {
-      --bg:          #0e0800;
-      --bg-panel:    #160d04;
-      --bg-card:     #1c1108;
-      --bg-card-h:   #231508;
+      --bg:         #0e0800;
+      --bg-panel:   #160d04;
+      --bg-card:    #1c1108;
+      --bg-card-h:  #231508;
 
-      --gold:        #d4a843;
-      --gold-light:  #f0cc7a;
-      --gold-dim:    #7a5e20;
-      --gold-pale:   #faecc8;
+      --gold:       #d4a843;
+      --gold-light: #f0cc7a;
+      --gold-dim:   #7a5e20;
+      --gold-pale:  #faecc8;
 
-      --red:         #c0392b;
-      --red-light:   #e05540;
-      --red-dim:     #5c1510;
+      --red:        #c0392b;
+      --red-light:  #e05540;
+      --red-dim:    #5c1510;
 
-      --ink:         #f5e8cc;
-      --ink-soft:    #c8b08a;
-      --ink-muted:   #7a6040;
+      --ink:        #f5e8cc;
+      --ink-soft:   #c8b08a;
+      --ink-muted:  #7a6040;
 
-      --border:      rgba(212,168,67,.22);
-      --border-h:    rgba(212,168,67,.55);
+      --border:     rgba(212,168,67,.22);
+      --border-h:   rgba(212,168,67,.55);
 
-      --shadow:      0 4px 24px rgba(0,0,0,.55);
-      --shadow-lg:   0 12px 48px rgba(0,0,0,.75);
+      --shadow:     0 4px 24px rgba(0,0,0,.55);
+      --shadow-lg:  0 12px 48px rgba(0,0,0,.75);
 
-      --radius:      3px;
+      --radius:     3px;
     }
 
-    /* ═══════════════════════════════════════════
-       RESET & BASE
-    ═══════════════════════════════════════════ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -51,7 +48,6 @@
       overflow-x: hidden;
     }
 
-    /* ── background texture ── */
     body::before {
       content: '';
       position: fixed; inset: 0; z-index: 0; pointer-events: none;
@@ -59,84 +55,37 @@
         radial-gradient(ellipse 80% 50% at 50% 0%,   rgba(192,57,43,.06) 0%, transparent 70%),
         radial-gradient(ellipse 60% 60% at 0%   100%, rgba(212,168,67,.05) 0%, transparent 60%),
         radial-gradient(ellipse 60% 60% at 100% 100%, rgba(212,168,67,.05) 0%, transparent 60%),
-        repeating-linear-gradient(0deg,   transparent, transparent 48px, rgba(212,168,67,.025) 48px, rgba(212,168,67,.025) 49px),
-        repeating-linear-gradient(90deg,  transparent, transparent 48px, rgba(212,168,67,.025) 48px, rgba(212,168,67,.025) 49px);
+        repeating-linear-gradient(0deg,  transparent, transparent 48px, rgba(212,168,67,.025) 48px, rgba(212,168,67,.025) 49px),
+        repeating-linear-gradient(90deg, transparent, transparent 48px, rgba(212,168,67,.025) 48px, rgba(212,168,67,.025) 49px);
     }
 
-    /* ═══════════════════════════════════════════
-       ORNAMENT HELPERS
-    ═══════════════════════════════════════════ */
-    .divider {
-      display: flex; align-items: center; gap: 10px;
-      color: var(--gold-dim);
-      font-size: 11px; letter-spacing: 4px;
-      user-select: none;
-    }
-    .divider::before, .divider::after {
-      content: ''; flex: 1;
-      border-top: 1px solid var(--border);
-    }
-
-    /* corner brackets on cards */
-    .bracketed {
-      position: relative;
-    }
-    .bracketed::before, .bracketed::after,
-    .bracketed > .br-tl, .bracketed > .br-tr,
-    .bracketed > .br-bl, .bracketed > .br-br {
-      content: '';
-      position: absolute;
-      width: 10px; height: 10px;
-      border-color: var(--gold-dim);
-      border-style: solid;
-      pointer-events: none;
-      transition: border-color .25s;
-    }
-    .bracketed > .br-tl { top: 0;  left: 0;  border-width: 1px 0 0 1px; }
-    .bracketed > .br-tr { top: 0;  right: 0; border-width: 1px 1px 0 0; }
-    .bracketed > .br-bl { bottom: 0; left: 0;  border-width: 0 0 1px 1px; }
-    .bracketed > .br-br { bottom: 0; right: 0; border-width: 0 1px 1px 0; }
-    .card:hover .bracketed > .br-tl,
-    .card:hover .bracketed > .br-tr,
-    .card:hover .bracketed > .br-bl,
-    .card:hover .bracketed > .br-br { border-color: var(--gold); }
-
-    /* ═══════════════════════════════════════════
+    /* ═══════════════════════════
        HEADER
-    ═══════════════════════════════════════════ */
+    ═══════════════════════════ */
     header {
       position: relative; z-index: 10;
       text-align: center;
-      padding: 40px 24px 28px;
+      padding: 36px 24px 24px;
       border-bottom: 1px solid var(--border);
       background: linear-gradient(180deg, rgba(192,57,43,.10) 0%, transparent 100%);
     }
-
     .header-eyebrow {
       font-size: 10px; letter-spacing: 5px;
       color: var(--gold-dim); text-transform: uppercase;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
-
     header h1 {
       font-family: 'Ma Shan Zheng', 'Noto Serif SC', serif;
-      font-size: clamp(26px, 6vw, 52px);
-      font-weight: 400;
-      letter-spacing: 6px;
-      line-height: 1.15;
+      font-size: clamp(24px, 5.5vw, 48px);
+      font-weight: 400; letter-spacing: 6px; line-height: 1.15;
       background: linear-gradient(160deg, var(--gold-light) 0%, var(--gold) 40%, #fff5d6 60%, var(--gold) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
       filter: drop-shadow(0 2px 8px rgba(212,168,67,.3));
     }
-
     .header-sub {
-      margin-top: 10px;
-      font-size: 12px; letter-spacing: 3px;
-      color: var(--ink-muted);
+      margin-top: 8px;
+      font-size: 12px; letter-spacing: 3px; color: var(--ink-muted);
     }
-
-    /* red dot ornaments */
     header::before, header::after {
       content: '◆';
       position: absolute; top: 50%; transform: translateY(-50%);
@@ -145,9 +94,81 @@
     header::before { left: 24px; }
     header::after  { right: 24px; }
 
-    /* ═══════════════════════════════════════════
-       TOOLBAR
-    ═══════════════════════════════════════════ */
+    /* ═══════════════════════════
+       TABS NAV
+    ═══════════════════════════ */
+    .tab-nav {
+      position: relative; z-index: 10;
+      display: flex;
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border);
+    }
+    .tab-btn {
+      flex: 1;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 0 20px;
+      height: 46px;
+      background: none; border: none;
+      color: var(--ink-muted);
+      font-family: 'Noto Serif SC', serif;
+      font-size: 13px; letter-spacing: 1px;
+      cursor: pointer;
+      position: relative;
+      transition: color .2s;
+      border-right: 1px solid var(--border);
+    }
+    .tab-btn:last-child { border-right: none; }
+    .tab-btn::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: var(--gold);
+      transform: scaleX(0); transition: transform .25s;
+    }
+    .tab-btn.active { color: var(--gold); }
+    .tab-btn.active::after { transform: scaleX(1); }
+    .tab-btn:hover { color: var(--ink-soft); }
+    .tab-btn .tab-icon { font-size: 15px; }
+    .tab-badge {
+      background: var(--red-dim);
+      border: 1px solid rgba(192,57,43,.5);
+      color: #e07060;
+      font-size: 10px; font-weight: 700;
+      border-radius: 20px;
+      padding: 1px 7px;
+      letter-spacing: 0;
+      display: none;
+    }
+    .tab-badge.show { display: inline-block; }
+
+    /* ═══════════════════════════
+       TAB PANELS
+    ═══════════════════════════ */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ═══════════════════════════
+       CORNER BRACKETS
+    ═══════════════════════════ */
+    .bracketed { position: relative; }
+    .bracketed > .br-tl, .bracketed > .br-tr,
+    .bracketed > .br-bl, .bracketed > .br-br {
+      content: ''; position: absolute;
+      width: 10px; height: 10px;
+      border-color: var(--gold-dim); border-style: solid;
+      pointer-events: none; transition: border-color .25s;
+    }
+    .bracketed > .br-tl { top:0;    left:0;  border-width: 1px 0 0 1px; }
+    .bracketed > .br-tr { top:0;    right:0; border-width: 1px 1px 0 0; }
+    .bracketed > .br-bl { bottom:0; left:0;  border-width: 0 0 1px 1px; }
+    .bracketed > .br-br { bottom:0; right:0; border-width: 0 1px 1px 0; }
+    .card:hover .bracketed > .br-tl,
+    .card:hover .bracketed > .br-tr,
+    .card:hover .bracketed > .br-bl,
+    .card:hover .bracketed > .br-br { border-color: var(--gold); }
+
+    /* ═══════════════════════════
+       TOOLBAR (characters tab)
+    ═══════════════════════════ */
     .toolbar {
       position: relative; z-index: 10;
       display: flex; align-items: center;
@@ -156,8 +177,6 @@
       background: var(--bg-panel);
       border-bottom: 1px solid var(--border);
     }
-
-    /* search */
     .search-wrap {
       position: relative;
       flex: 1; min-width: 150px; max-width: 260px;
@@ -172,189 +191,216 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       color: var(--ink);
-      font-family: 'Noto Serif SC', serif;
-      font-size: 13px;
+      font-family: 'Noto Serif SC', serif; font-size: 13px;
       padding: 8px 12px 8px 32px;
-      outline: none;
-      transition: border-color .2s, background .2s;
+      outline: none; transition: border-color .2s, background .2s;
     }
     .search-wrap input::placeholder { color: var(--ink-muted); }
-    .search-wrap input:focus {
-      border-color: var(--gold-dim);
-      background: rgba(212,168,67,.10);
-    }
+    .search-wrap input:focus { border-color: var(--gold-dim); background: rgba(212,168,67,.10); }
 
-    /* select */
     select.filter-type {
       background: rgba(212,168,67,.06);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       color: var(--ink);
-      font-family: 'Noto Serif SC', serif;
-      font-size: 13px;
+      font-family: 'Noto Serif SC', serif; font-size: 13px;
       padding: 8px 12px;
-      outline: none; cursor: pointer;
-      transition: border-color .2s;
+      outline: none; cursor: pointer; transition: border-color .2s;
     }
     select.filter-type option { background: #1c1108; }
     select.filter-type:focus { border-color: var(--gold-dim); }
 
     .count {
       margin-left: auto;
-      font-size: 11px; letter-spacing: 1px;
-      color: var(--ink-muted);
+      font-size: 11px; letter-spacing: 1px; color: var(--ink-muted);
       white-space: nowrap;
       background: rgba(212,168,67,.07);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 4px 12px;
+      border-radius: 20px; padding: 4px 12px;
     }
 
-    /* ═══════════════════════════════════════════
-       GRID
-    ═══════════════════════════════════════════ */
-    .grid-wrap {
-      position: relative; z-index: 5;
-      padding: 28px 28px 60px;
-    }
-
+    /* ═══════════════════════════
+       CHARACTER GRID
+    ═══════════════════════════ */
+    .grid-wrap { position: relative; z-index: 5; padding: 28px 28px 60px; }
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
       gap: 20px;
     }
 
-    /* ═══════════════════════════════════════════
-       CARD
-    ═══════════════════════════════════════════ */
     .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: visible; /* let corner brackets breathe */
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: visible;
       cursor: pointer;
       transition: transform .22s, box-shadow .22s, border-color .22s, background .22s;
-      animation: fadeUp .38s ease both;
-      position: relative;
+      animation: fadeUp .38s ease both; position: relative;
     }
     .card:hover {
       transform: translateY(-5px);
       box-shadow: var(--shadow), 0 0 0 1px var(--border-h), 0 0 20px rgba(212,168,67,.08);
-      border-color: var(--border-h);
-      background: var(--bg-card-h);
+      border-color: var(--border-h); background: var(--bg-card-h);
     }
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
-    /* inner wrapper clips image, corner brackets sit outside */
-    .card-inner {
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-
+    .card-inner { border-radius: var(--radius); overflow: hidden; }
     .card-img {
-      width: 100%;
-      aspect-ratio: 3/4;
-      background: #110900;
-      position: relative;
-      overflow: hidden;
+      width: 100%; aspect-ratio: 3/4;
+      background: #110900; position: relative; overflow: hidden;
     }
     .card-img img {
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: center top;
-      display: block;
-      transition: transform .35s;
-      filter: brightness(.92) saturate(1.1);
+      width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block;
+      transition: transform .35s; filter: brightness(.92) saturate(1.1);
     }
     .card:hover .card-img img { transform: scale(1.06); filter: brightness(1) saturate(1.2); }
-
-    /* gradient footer on image */
     .card-img::after {
-      content: '';
-      position: absolute; bottom: 0; left: 0; right: 0;
-      height: 55%;
-      background: linear-gradient(transparent, rgba(10,5,0,.85));
-      pointer-events: none;
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 55%;
+      background: linear-gradient(transparent, rgba(10,5,0,.85)); pointer-events: none;
     }
-
     .card-img-placeholder {
       width: 100%; height: 100%;
       display: flex; align-items: center; justify-content: center;
       font-size: 42px; color: var(--gold-dim);
       background: radial-gradient(circle, rgba(212,168,67,.05) 0%, transparent 70%);
     }
-
-    /* zoom badge */
     .zoom-hint {
       position: absolute; top: 8px; right: 8px; z-index: 2;
-      background: rgba(0,0,0,.6);
-      border: 1px solid var(--gold-dim);
-      border-radius: 2px;
-      color: var(--gold);
-      font-size: 11px;
+      background: rgba(0,0,0,.6); border: 1px solid var(--gold-dim);
+      border-radius: 2px; color: var(--gold); font-size: 11px;
       width: 26px; height: 26px;
       display: flex; align-items: center; justify-content: center;
-      opacity: 0; transition: opacity .2s;
-      pointer-events: none;
+      opacity: 0; transition: opacity .2s; pointer-events: none;
     }
     .card:hover .zoom-hint { opacity: 1; }
-
     .card-body {
       padding: 10px 12px 13px;
       background: linear-gradient(180deg, rgba(212,168,67,.04), transparent);
     }
-
     .card-type {
       font-size: 9px; font-weight: 600;
       letter-spacing: 2.5px; text-transform: uppercase;
-      color: #d9d4c9; margin-bottom: 4px;
+      color: var(--gold-dim); margin-bottom: 4px;
       display: flex; align-items: center; gap: 5px;
     }
     .card-type::before {
-      content: '';
-      display: inline-block; width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--red);
-      flex-shrink: 0;
+      content: ''; display: inline-block; width: 5px; height: 5px;
+      border-radius: 50%; background: var(--red); flex-shrink: 0;
     }
-
     .card-name {
       font-family: 'Noto Serif SC', serif;
-      font-size: 15px; font-weight: 700;
-      color: var(--ink);
-      line-height: 1.3;
-      letter-spacing: 1px;
+      font-size: 15px; font-weight: 700; color: var(--ink);
+      line-height: 1.3; letter-spacing: 1px;
     }
-
     .card-name a {
-      color: var(--ink);
-      text-decoration: none;
-      transition: color .2s;
+      color: var(--ink); text-decoration: none; transition: color .2s;
     }
-    .card-name a:hover {
-      color: var(--gold-light);
-    }
+    .card-name a:hover { color: var(--gold-light); }
     .card-name a::after {
-      content: ' ↗';
-      font-size: 10px;
-      color: var(--gold-dim);
-      vertical-align: super;
-      transition: color .2s;
+      content: ' ↗'; font-size: 10px; color: var(--gold-dim);
+      vertical-align: super; transition: color .2s;
     }
-    .card-name a:hover::after {
-      color: var(--gold);
+    .card-name a:hover::after { color: var(--gold); }
+
+    /* ═══════════════════════════
+       NOTICES TAB
+    ═══════════════════════════ */
+    .notices-wrap {
+      position: relative; z-index: 5;
+      padding: 28px 28px 60px;
+      max-width: 860px;
     }
 
-    /* ═══════════════════════════════════════════
-       STATE MESSAGES
-    ═══════════════════════════════════════════ */
-    .state-msg {
-      grid-column: 1/-1;
-      text-align: center;
-      padding: 72px 24px;
+    .notice-list { display: flex; flex-direction: column; gap: 16px; }
+
+    .notice-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      animation: fadeUp .35s ease both;
+    }
+    .notice-card:hover { border-color: var(--border-h); }
+
+    /* coloured left accent per type */
+    .notice-card[data-type="Thông báo"]  { border-left: 3px solid var(--gold); }
+    .notice-card[data-type="Sự kiện"]    { border-left: 3px solid #4a9eda; }
+    .notice-card[data-type="Quy tắc"]    { border-left: 3px solid var(--red); }
+    .notice-card[data-type="Khẩn"]       { border-left: 3px solid #e8a020; }
+
+    .notice-header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 13px 16px 11px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .notice-type-badge {
+      flex-shrink: 0;
+      font-size: 9px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 3px 9px; border-radius: 2px;
+      background: rgba(212,168,67,.10);
+      border: 1px solid var(--border);
+      color: var(--gold-dim);
+    }
+    .notice-card[data-type="Sự kiện"]  .notice-type-badge { background: rgba(74,158,218,.10); border-color: rgba(74,158,218,.3); color: #6ab8ea; }
+    .notice-card[data-type="Quy tắc"]  .notice-type-badge { background: rgba(192,57,43,.12); border-color: rgba(192,57,43,.35); color: #e07060; }
+    .notice-card[data-type="Khẩn"]     .notice-type-badge { background: rgba(232,160,32,.12); border-color: rgba(232,160,32,.35); color: #e8a020; }
+
+    .notice-title {
+      flex: 1; min-width: 0;
+      font-size: 14px; font-weight: 700;
+      color: var(--ink); letter-spacing: 0.5px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .notice-date {
+      flex-shrink: 0;
+      font-size: 11px; color: var(--ink-muted);
+      letter-spacing: 0.5px;
+    }
+    .notice-chevron {
+      flex-shrink: 0;
+      color: var(--gold-dim); font-size: 11px;
+      transition: transform .22s;
+    }
+    .notice-card.open .notice-chevron { transform: rotate(180deg); }
+
+    .notice-body {
+      overflow: hidden;
+      max-height: 0; transition: max-height .3s ease, padding .3s ease;
+      padding: 0 16px;
+      border-top: 0px solid var(--border);
+    }
+    .notice-card.open .notice-body {
+      max-height: 600px;
+      padding: 0 16px 16px;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+    }
+    .notice-content {
+      font-size: 13px; line-height: 1.9;
+      color: var(--ink-soft);
+      white-space: pre-wrap;
+    }
+
+    .notices-empty {
+      text-align: center; padding: 72px 24px;
       color: var(--ink-muted);
+    }
+    .notices-empty .icon { font-size: 44px; margin-bottom: 14px; opacity: .35; }
+    .notices-empty p { font-size: 15px; letter-spacing: 1px; }
+    .notices-empty small { display: block; margin-top: 7px; font-size: 12px; opacity: .6; }
+    .notices-empty code {
+      background: rgba(212,168,67,.1); border-radius: 3px;
+      padding: 2px 7px; font-size: 11px; color: var(--gold);
+    }
+
+    /* ═══════════════════════════
+       STATE MESSAGES (chars)
+    ═══════════════════════════ */
+    .state-msg {
+      grid-column: 1/-1; text-align: center; padding: 72px 24px; color: var(--ink-muted);
     }
     .state-msg .icon { font-size: 44px; margin-bottom: 14px; opacity: .35; }
     .state-msg p { font-size: 15px; letter-spacing: 1px; }
@@ -364,28 +410,21 @@
       padding: 2px 7px; font-size: 11px; color: var(--gold);
     }
 
-    /* ═══════════════════════════════════════════
+    /* ═══════════════════════════
        LIGHTBOX
-    ═══════════════════════════════════════════ */
+    ═══════════════════════════ */
     .lightbox {
       position: fixed; inset: 0; z-index: 100;
       background: rgba(5,2,0,.93);
-      display: flex; flex-direction: column;
-      align-items: center;
+      display: flex; flex-direction: column; align-items: center;
       opacity: 0; pointer-events: none;
-      transition: opacity .22s;
-      backdrop-filter: blur(8px);
-      overflow: hidden;
+      transition: opacity .22s; backdrop-filter: blur(8px); overflow: hidden;
     }
     .lightbox.open { opacity: 1; pointer-events: all; }
-
-    /* viewport */
     .lb-viewport {
-      flex: 1; width: 100%;
-      overflow: auto;
+      flex: 1; width: 100%; overflow: auto;
       display: flex; align-items: center; justify-content: center;
-      cursor: grab;
-      padding: 20px;
+      cursor: grab; padding: 20px;
     }
     .lb-viewport.dragging { cursor: grabbing; }
     .lb-viewport img {
@@ -395,23 +434,17 @@
       transition: width .18s ease;
       user-select: none; pointer-events: none;
     }
-
-    /* bottom bar */
     .lb-bar {
       flex-shrink: 0; width: 100%;
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
       padding: 11px 20px;
       background: rgba(10,5,0,.75);
-      border-top: 1px solid var(--border);
-      backdrop-filter: blur(4px);
+      border-top: 1px solid var(--border); backdrop-filter: blur(4px);
     }
-
     .lb-caption {
       font-family: 'Noto Serif SC', serif;
-      font-size: 15px; font-weight: 700;
-      color: var(--ink);
-      letter-spacing: 1px;
-      flex: 1; min-width: 0;
+      font-size: 15px; font-weight: 700; color: var(--ink);
+      letter-spacing: 1px; flex: 1; min-width: 0;
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
     .lb-caption span {
@@ -420,16 +453,10 @@
       letter-spacing: 2.5px; text-transform: uppercase;
       color: var(--gold-dim); vertical-align: middle;
     }
-
-    .lb-controls {
-      display: flex; align-items: center; gap: 6px; flex-shrink: 0;
-    }
-
+    .lb-controls { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
     .lb-btn {
-      background: rgba(212,168,67,.08);
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      color: var(--gold);
+      background: rgba(212,168,67,.08); border: 1px solid var(--border);
+      border-radius: 2px; color: var(--gold);
       font-size: 16px; font-weight: 700;
       width: 34px; height: 34px;
       display: flex; align-items: center; justify-content: center;
@@ -437,39 +464,32 @@
       line-height: 1; font-family: 'Noto Serif SC', serif;
     }
     .lb-btn:hover { background: rgba(212,168,67,.18); border-color: var(--gold-dim); }
-
-    .lb-scale {
-      font-size: 11px; min-width: 38px; text-align: center;
-      color: var(--ink-muted); letter-spacing: 1px;
-    }
-
+    .lb-scale { font-size: 11px; min-width: 38px; text-align: center; color: var(--ink-muted); letter-spacing: 1px; }
     .lb-btn-close {
-      background: rgba(192,57,43,.15);
-      border: 1px solid rgba(192,57,43,.35);
+      background: rgba(192,57,43,.15); border: 1px solid rgba(192,57,43,.35);
       border-radius: 2px; color: #e07060;
-      font-family: 'Noto Serif SC', serif;
-      font-size: 12px; font-weight: 600;
+      font-family: 'Noto Serif SC', serif; font-size: 12px; font-weight: 600;
       padding: 0 14px; height: 34px;
       display: flex; align-items: center;
-      cursor: pointer; letter-spacing: 1px;
-      transition: background .15s;
+      cursor: pointer; letter-spacing: 1px; transition: background .15s;
     }
     .lb-btn-close:hover { background: rgba(192,57,43,.3); }
 
-    /* ═══════════════════════════════════════════
+    /* ═══════════════════════════
        RESPONSIVE
-    ═══════════════════════════════════════════ */
+    ═══════════════════════════ */
     @media (max-width: 540px) {
-      header { padding: 28px 16px 20px; }
+      header { padding: 24px 16px 18px; }
       header h1 { letter-spacing: 3px; }
-      .toolbar  { padding: 10px 14px; }
-      .grid-wrap { padding: 16px 14px 48px; }
+      .toolbar { padding: 10px 14px; }
+      .grid-wrap { padding: 14px 12px 48px; }
       .grid { gap: 12px; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+      .notices-wrap { padding: 14px 12px 48px; }
+      .tab-btn { font-size: 12px; padding: 0 12px; }
       .lb-bar { padding: 10px 12px; }
       .lb-btn { width: 30px; height: 30px; font-size: 14px; }
     }
 
-    /* scrollbar */
     ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
@@ -484,28 +504,52 @@
   <p class="header-sub" id="headerSub">Đang triệu hồi anh hùng…</p>
 </header>
 
-<!-- ═══ TOOLBAR ═══ -->
-<div class="toolbar">
-  <div class="search-wrap">
-    <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-    </svg>
-    <input type="text" id="searchInput" placeholder="Tìm tên nhân vật…" oninput="render()" />
-  </div>
-
-  <select class="filter-type" id="filterType" onchange="render()">
-    <option value="">Tất cả môn phái</option>
-  </select>
-
-  <span class="count" id="countLabel"></span>
+<!-- ═══ TAB NAV ═══ -->
+<div class="tab-nav">
+  <button class="tab-btn active" id="tab-chars-btn" onclick="switchTab('chars')">
+    <span class="tab-icon">⚔</span> Nhân Vật
+  </button>
+  <button class="tab-btn" id="tab-notices-btn" onclick="switchTab('notices')">
+    <span class="tab-icon">📜</span> Thông Báo Bang Hội
+    <span class="tab-badge" id="noticeBadge"></span>
+  </button>
 </div>
 
-<!-- ═══ GRID ═══ -->
-<div class="grid-wrap">
-  <div class="grid" id="grid">
-    <div class="state-msg">
-      <div class="icon">⚔</div>
-      <p>Đang triệu hồi dữ liệu…</p>
+<!-- ═══ TAB: NHÂN VẬT ═══ -->
+<div class="tab-panel active" id="tab-chars">
+
+  <div class="toolbar">
+    <div class="search-wrap">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="searchInput" placeholder="Tìm tên nhân vật…" oninput="renderChars()" />
+    </div>
+    <select class="filter-type" id="filterType" onchange="renderChars()">
+      <option value="">Tất cả môn phái</option>
+    </select>
+    <span class="count" id="countLabel"></span>
+  </div>
+
+  <div class="grid-wrap">
+    <div class="grid" id="grid">
+      <div class="state-msg">
+        <div class="icon">⚔</div>
+        <p>Đang triệu hồi dữ liệu…</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ TAB: THÔNG BÁO ═══ -->
+<div class="tab-panel" id="tab-notices">
+  <div class="notices-wrap">
+    <div class="notice-list" id="noticeList">
+      <div class="notices-empty">
+        <div class="icon">📜</div>
+        <p>Đang tải thông báo…</p>
+      </div>
     </div>
   </div>
 </div>
@@ -513,16 +557,14 @@
 <!-- ═══ LIGHTBOX ═══ -->
 <div class="lightbox" id="lightbox">
   <div id="lbBackdrop" style="position:absolute;inset:0;z-index:0" onclick="closeLightbox()"></div>
-
   <div class="lb-viewport" id="lbViewport" style="position:relative;z-index:1">
     <img id="lbImg" src="" alt="" draggable="false" />
   </div>
-
   <div class="lb-bar" style="position:relative;z-index:1">
     <div class="lb-caption" id="lbCaption"></div>
     <div class="lb-controls">
       <button class="lb-btn" id="lbZoomOut" title="Thu nhỏ">−</button>
-      <span  class="lb-scale"  id="lbScaleLabel">100%</span>
+      <span  class="lb-scale" id="lbScaleLabel">100%</span>
       <button class="lb-btn" id="lbZoomIn"  title="Phóng to">+</button>
       <button class="lb-btn" id="lbReset"   title="Đặt lại" style="font-size:12px">↺</button>
       <button class="lb-btn-close" onclick="closeLightbox()">✕ Đóng</button>
@@ -531,191 +573,288 @@
 </div>
 
 <script>
-  let allChars = [];
-
-  /* ── CSV ─────────────────────────────────── */
-  function parseCSV(text) {
-    const lines = text.trim().split(/\r?\n/);
-    if (lines.length < 2) return [];
-    const hdr = lines[0].split(',').map(h => h.trim().toLowerCase());
-    const iN = hdr.indexOf('name'), iT = hdr.indexOf('type'), iI = hdr.indexOf('image'), iL = hdr.indexOf('link');
-    if (iN < 0) return [];
-    return lines.slice(1).map(l => {
-      const c = splitLine(l);
-      return { name: (c[iN]||'').trim(), type: iT>=0?(c[iT]||'').trim():'', image: iI>=0?(c[iI]||'').trim():'', link: iL>=0?(c[iL]||'').trim():'' };
-    }).filter(r => r.name);
+/* ════════════════════════════
+   HELPERS
+════════════════════════════ */
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function splitLine(line) {
+  const r=[]; let cur='', q=false;
+  for (const c of line) {
+    if (c==='"') q=!q;
+    else if (c===','&&!q) { r.push(cur); cur=''; }
+    else cur+=c;
   }
+  r.push(cur); return r;
+}
 
-  function splitLine(line) {
-    const r=[]; let cur='', q=false;
-    for (const c of line) {
-      if (c==='"') q=!q;
-      else if (c===','&&!q) { r.push(cur); cur=''; }
-      else cur+=c;
-    }
-    r.push(cur); return r;
+/* ════════════════════════════
+   TABS
+════════════════════════════ */
+function switchTab(tab) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.getElementById('tab-' + tab + '-btn').classList.add('active');
+}
+
+/* ════════════════════════════
+   CHARACTERS
+════════════════════════════ */
+let allChars = [];
+
+function parseCharCSV(text) {
+  const lines = text.trim().split(/\r?\n/);
+  if (lines.length < 2) return [];
+  const hdr = lines[0].split(',').map(h => h.trim().toLowerCase());
+  const iN=hdr.indexOf('name'), iT=hdr.indexOf('type'), iI=hdr.indexOf('image'), iL=hdr.indexOf('link');
+  if (iN < 0) return [];
+  return lines.slice(1).map(l => {
+    const c = splitLine(l);
+    return {
+      name:  (c[iN]||'').trim(),
+      type:  iT>=0 ? (c[iT]||'').trim() : '',
+      image: iI>=0 ? (c[iI]||'').trim() : '',
+      link:  iL>=0 ? (c[iL]||'').trim() : '',
+    };
+  }).filter(r => r.name);
+}
+
+async function loadChars() {
+  try {
+    const res = await fetch('data.csv');
+    if (!res.ok) throw new Error(res.status);
+    allChars = parseCharCSV(await res.text());
+    rebuildFilter();
+    const t = getTypes();
+    document.getElementById('headerSub').textContent =
+      allChars.length + ' anh hùng' + (t.length ? ' · ' + t.length + ' môn phái' : '');
+    renderChars();
+  } catch {
+    document.getElementById('headerSub').textContent = 'Không thể tải dữ liệu';
+    document.getElementById('grid').innerHTML = `
+      <div class="state-msg">
+        <div class="icon">⚠</div>
+        <p>Không tìm thấy file dữ liệu</p>
+        <small>Đặt file <code>data.csv</code> cùng thư mục với <code>index.html</code></small>
+      </div>`;
   }
+}
 
-  async function init() {
-    try {
-      const res = await fetch('data.csv');
-      if (!res.ok) throw new Error(res.status);
-      allChars = parseCSV(await res.text());
-      rebuildFilter();
-      const t = getTypes();
-      document.getElementById('headerSub').textContent =
-        allChars.length + ' anh hùng' + (t.length ? ' · ' + t.length + ' môn phái' : '');
-      render();
-    } catch {
-      document.getElementById('headerSub').textContent = 'Không thể tải dữ liệu';
-      document.getElementById('grid').innerHTML = `
-        <div class="state-msg">
-          <div class="icon">⚠</div>
-          <p>Không tìm thấy file dữ liệu</p>
-          <small>Đặt file <code>data.csv</code> cùng thư mục với <code>index.html</code></small>
-        </div>`;
-    }
+function getTypes() {
+  return [...new Set(allChars.map(c=>c.type).filter(Boolean))].sort();
+}
+function rebuildFilter() {
+  const sel = document.getElementById('filterType');
+  sel.innerHTML = '<option value="">Tất cả môn phái</option>';
+  getTypes().forEach(t => {
+    const o = document.createElement('option');
+    o.value=t; o.textContent=t; sel.appendChild(o);
+  });
+}
+
+function renderChars() {
+  const q  = document.getElementById('searchInput').value.trim().toLowerCase();
+  const ft = document.getElementById('filterType').value;
+  const list = allChars.filter(c =>
+    (!q  || c.name.toLowerCase().includes(q) || c.type.toLowerCase().includes(q)) &&
+    (!ft || c.type === ft)
+  );
+  document.getElementById('countLabel').textContent =
+    allChars.length ? list.length + ' / ' + allChars.length + ' nhân vật' : '';
+
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  if (!list.length) {
+    grid.innerHTML = `<div class="state-msg"><div class="icon">🔍</div><p>Không tìm thấy kết quả</p><small>Thử thay đổi từ khoá hoặc bộ lọc</small></div>`;
+    return;
   }
+  list.forEach((c, i) => {
+    const card = document.createElement('div');
+    card.className = 'card bracketed';
+    card.style.animationDelay = Math.min(i*40, 500) + 'ms';
 
-  /* ── FILTER ──────────────────────────────── */
-  function getTypes() {
-    return [...new Set(allChars.map(c=>c.type).filter(Boolean))].sort();
-  }
-  function rebuildFilter() {
-    const sel = document.getElementById('filterType');
-    sel.innerHTML = '<option value="">Tất cả môn phái</option>';
-    getTypes().forEach(t => {
-      const o = document.createElement('option');
-      o.value=t; o.textContent=t; sel.appendChild(o);
-    });
-  }
-
-  /* ── RENDER ──────────────────────────────── */
-  function esc(s) {
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-
-  function render() {
-    const q  = document.getElementById('searchInput').value.trim().toLowerCase();
-    const ft = document.getElementById('filterType').value;
-    const list = allChars.filter(c =>
-      (!q  || c.name.toLowerCase().includes(q) || c.type.toLowerCase().includes(q)) &&
-      (!ft || c.type === ft)
-    );
-
-    document.getElementById('countLabel').textContent =
-      allChars.length ? list.length + ' / ' + allChars.length + ' nhân vật' : '';
-
-    const grid = document.getElementById('grid');
-    grid.innerHTML = '';
-
-    if (!list.length) {
-      grid.innerHTML = `<div class="state-msg"><div class="icon">🔍</div><p>Không tìm thấy kết quả</p><small>Thử thay đổi từ khoá hoặc bộ lọc</small></div>`;
-      return;
-    }
-
-    list.forEach((c, i) => {
-      const card = document.createElement('div');
-      card.className = 'card bracketed';
-      card.style.animationDelay = Math.min(i*40, 500) + 'ms';
-
-      const imgHtml = c.image
-        ? `<img src="${esc(c.image)}" alt="${esc(c.name)}" loading="lazy"
-             onerror="this.parentElement.innerHTML='<div class=card-img-placeholder>⚔</div>'">`
-        : `<div class="card-img-placeholder">⚔</div>`;
-
-      const zoom = c.image ? `<div class="zoom-hint">⤢</div>` : '';
-
-      const nameHtml = c.link
-        ? `<a href="${esc(c.link)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${esc(c.name)}</a>`
-        : esc(c.name);
-
-      card.innerHTML = `
-        <div class="br-tl"></div><div class="br-tr"></div>
-        <div class="br-bl"></div><div class="br-br"></div>
-        <div class="card-inner">
-          <div class="card-img">${imgHtml}${zoom}</div>
-          <div class="card-body">
-            ${c.type ? `<div class="card-type">${esc(c.type)}</div>` : ''}
-            <div class="card-name">${nameHtml}</div>
-          </div>
-        </div>`;
-
-      if (c.image) card.addEventListener('click', () => openLightbox(c));
-      grid.appendChild(card);
-    });
-  }
-
-  /* ── LIGHTBOX ─────────────────────────────── */
-  const STEP=0.25, MIN=0.25, MAX=4;
-  let lbScale=1, lbBase=0;
-
-  function openLightbox(c) {
-    const img = document.getElementById('lbImg');
-    img.src = c.image;
+    const imgHtml = c.image
+      ? `<img src="${esc(c.image)}" alt="${esc(c.name)}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=card-img-placeholder>⚔</div>'">`
+      : `<div class="card-img-placeholder">⚔</div>`;
+    const zoom = c.image ? `<div class="zoom-hint">⤢</div>` : '';
     const nameHtml = c.link
-      ? `<a href="${esc(c.link)}" target="_blank" rel="noopener" style="color:var(--gold-light);text-decoration:none;" title="Mở trang mạng xã hội">${esc(c.name)} ↗</a>`
+      ? `<a href="${esc(c.link)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${esc(c.name)}</a>`
       : esc(c.name);
-    document.getElementById('lbCaption').innerHTML =
-      nameHtml + (c.type ? `<span>${esc(c.type)}</span>` : '');
-    img.onload = () => { lbScale=1; fitImage(); updateLabel(); };
-    if (img.complete && img.naturalWidth) { lbScale=1; fitImage(); updateLabel(); }
-    document.getElementById('lightbox').classList.add('open');
-    document.body.style.overflow = 'hidden';
+
+    card.innerHTML = `
+      <div class="br-tl"></div><div class="br-tr"></div>
+      <div class="br-bl"></div><div class="br-br"></div>
+      <div class="card-inner">
+        <div class="card-img">${imgHtml}${zoom}</div>
+        <div class="card-body">
+          ${c.type ? `<div class="card-type">${esc(c.type)}</div>` : ''}
+          <div class="card-name">${nameHtml}</div>
+        </div>
+      </div>`;
+
+    if (c.image) card.addEventListener('click', () => openLightbox(c));
+    grid.appendChild(card);
+  });
+}
+
+/* ════════════════════════════
+   NOTICES
+════════════════════════════ */
+let allNotices = [];
+
+function parseNoticeCSV(text) {
+  const lines = text.trim().split(/\r?\n/);
+  if (lines.length < 2) return [];
+  const hdr = lines[0].split(',').map(h => h.trim().toLowerCase());
+  const iD=hdr.indexOf('date'), iT=hdr.indexOf('type'), iTi=hdr.indexOf('title'), iC=hdr.indexOf('content');
+  if (iTi < 0) return [];
+  return lines.slice(1).map(l => {
+    const c = splitLine(l);
+    return {
+      date:    iD >=0 ? (c[iD] ||'').trim() : '',
+      type:    iT >=0 ? (c[iT] ||'').trim() : 'Thông báo',
+      title:   (c[iTi]||'').trim(),
+      content: iC >=0 ? (c[iC] ||'').trim() : '',
+    };
+  }).filter(r => r.title);
+}
+
+const SAMPLE_NOTICES = [
+  {
+    date: '18/03/2025', type: 'Khẩn',
+    title: 'Họp bang khẩn tối nay 20:00',
+    content: 'Toàn thể bang hội tập hợp tại sân bang lúc 20:00 tối nay.\n\nNội dung:\n• Phân công nhiệm vụ bang chiến tuần này\n• Bầu phó bang chủ mới thay thế Thiên Long\n• Thảo luận liên minh với bang Thiên Hạ\n\nVắng mặt không lý do sẽ bị trừ 200 điểm cống hiến.',
+  },
+  {
+    date: '15/03/2025', type: 'Sự kiện',
+    title: 'Bang chiến Chủ Nhật 16/03 — Lịch tập hợp',
+    content: 'Lịch bang chiến tuần này:\n\n• 19:30 — Tập hợp đầy đủ tại cổng thành Lạc Dương\n• 19:45 — Phân đội, nhận nhiệm vụ từng nhóm\n• 20:00 — Khai chiến chính thức\n\nYêu cầu:\n• Mang đủ đạn dược, thuốc hồi phục\n• Không AFK giữa trận\n• Bật mic Discord khi tham chiến\n\nAi không tham gia được, liên hệ phó bang trước 18:00.',
+  },
+  {
+    date: '10/03/2025', type: 'Thông báo',
+    title: 'Quy định nộp cống hàng tuần — cập nhật mới',
+    content: 'Từ tuần này áp dụng mức cống mới:\n\n• Thành viên thường: tối thiểu 500 lượng/tuần\n• Tứ đại hộ pháp: tối thiểu 1.000 lượng/tuần\n• Phó bang chủ: tối thiểu 1.500 lượng/tuần\n\nDeadline: 23:59 Chủ Nhật mỗi tuần.\nThành viên không đạt lần 1 sẽ bị nhắc nhở, lần 2 xem xét kick bang.',
+  },
+  {
+    date: '05/03/2025', type: 'Quy tắc',
+    title: 'Nội quy bang hội — phiên bản 2.0',
+    content: '1. Không KS (Kill Steal) thành viên trong bang dưới mọi hình thức\n2. Không spam kênh bang chat, dùng kênh đúng mục đích\n3. Tôn trọng lẫn nhau, không chửi tục hay xúc phạm\n4. Tích cực tham gia sự kiện bang — mỗi tuần ít nhất 2 buổi\n5. Chia sẻ thông tin bản đồ, boss hiếm trong kênh riêng\n6. Mọi thắc mắc hoặc mâu thuẫn liên hệ trực tiếp bang chủ hoặc phó bang, không tự giải quyết bằng PK',
+  },
+  {
+    date: '01/03/2025', type: 'Thông báo',
+    title: 'Chào mừng thành viên mới tháng 3',
+    content: 'Bang hội xin chào mừng các thành viên mới gia nhập trong tháng 3:\n\n• Bạch Vân Kiếm — Võ Đang\n• Huyết Liên Hoa — Nga My\n• Thiết Mộc Lan — Thiếu Lâm\n• Phong Vũ Lãng — Cái Bang\n\nCác bạn mới vui lòng đọc kỹ nội quy và liên hệ phó bang để được hướng dẫn nhiệm vụ tuần đầu. Chúc các bạn thăng tiến nhanh chóng trong võ lâm!',
+  },
+];
+
+async function loadNotices() {
+  try {
+    const res = await fetch('notices.csv');
+    if (!res.ok) throw new Error(res.status);
+    allNotices = parseNoticeCSV(await res.text());
+  } catch {
+    allNotices = SAMPLE_NOTICES;
+  }
+  renderNotices();
+}
+
+function renderNotices() {
+  const list = document.getElementById('noticeList');
+  list.innerHTML = '';
+
+  if (!allNotices.length) {
+    list.innerHTML = `<div class="notices-empty"><div class="icon">📭</div><p>Chưa có thông báo nào</p></div>`;
+    return;
   }
 
-  function fitImage() {
-    const vp=document.getElementById('lbViewport'), img=document.getElementById('lbImg');
-    const aW=vp.clientWidth-40, aH=vp.clientHeight-40;
-    const nW=img.naturalWidth||800, nH=img.naturalHeight||600;
-    lbBase = nW * Math.min(aW/nW, aH/nH, 1);
-    applyScale();
-  }
-  function applyScale() {
-    document.getElementById('lbImg').style.width = (lbBase*lbScale)+'px';
-  }
-  function updateLabel() {
-    document.getElementById('lbScaleLabel').textContent = Math.round(lbScale*100)+'%';
-  }
-  function zoomBy(d) {
-    lbScale = Math.min(MAX, Math.max(MIN, lbScale+d));
-    applyScale(); updateLabel();
-  }
-  function resetZoom() {
-    lbScale=1; applyScale(); updateLabel();
-    const vp=document.getElementById('lbViewport');
-    vp.scrollTop=0; vp.scrollLeft=0;
-  }
-  function closeLightbox() {
-    document.getElementById('lightbox').classList.remove('open');
-    document.body.style.overflow=''; lbScale=1;
-  }
+  // badge count
+  const badge = document.getElementById('noticeBadge');
+  badge.textContent = allNotices.length;
+  badge.classList.add('show');
 
-  document.getElementById('lbZoomIn') .addEventListener('click',()=>zoomBy(+STEP));
-  document.getElementById('lbZoomOut').addEventListener('click',()=>zoomBy(-STEP));
-  document.getElementById('lbReset')  .addEventListener('click',resetZoom);
+  allNotices.forEach((n, i) => {
+    const card = document.createElement('div');
+    card.className = 'notice-card';
+    card.dataset.type = n.type;
+    card.style.animationDelay = Math.min(i*40, 400) + 'ms';
 
-  document.getElementById('lbViewport').addEventListener('wheel', e=>{
-    e.preventDefault(); zoomBy(e.deltaY<0?+STEP:-STEP);
-  },{passive:false});
+    card.innerHTML = `
+      <div class="notice-header" onclick="toggleNotice(this.parentElement)">
+        <span class="notice-type-badge">${esc(n.type)}</span>
+        <span class="notice-title">${esc(n.title)}</span>
+        ${n.date ? `<span class="notice-date">${esc(n.date)}</span>` : ''}
+        <span class="notice-chevron">▾</span>
+      </div>
+      <div class="notice-body">
+        <div class="notice-content">${esc(n.content).replace(/\\n/g, '\n')}</div>
+      </div>`;
 
-  // drag pan + pinch zoom
-  (() => {
-    const vp=document.getElementById('lbViewport');
-    let drag=false, sx,sy,sl,st;
-    vp.addEventListener('mousedown',e=>{drag=true;vp.classList.add('dragging');sx=e.clientX;sy=e.clientY;sl=vp.scrollLeft;st=vp.scrollTop;});
-    window.addEventListener('mousemove',e=>{if(!drag)return;vp.scrollLeft=sl-(e.clientX-sx);vp.scrollTop=st-(e.clientY-sy);});
-    window.addEventListener('mouseup',()=>{drag=false;vp.classList.remove('dragging');});
-    let t0; vp.addEventListener('touchstart',e=>{if(e.touches.length===1){t0=e.touches[0];sl=vp.scrollLeft;st=vp.scrollTop;}},{passive:true});
-    vp.addEventListener('touchmove',e=>{if(e.touches.length===1&&t0){vp.scrollLeft=sl-(e.touches[0].clientX-t0.clientX);vp.scrollTop=st-(e.touches[0].clientY-t0.clientY);}},{passive:true});
-    let id=0,is=1;
-    vp.addEventListener('touchstart',e=>{if(e.touches.length===2){id=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);is=lbScale;}},{passive:true});
-    vp.addEventListener('touchmove',e=>{if(e.touches.length===2){const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);lbScale=Math.min(MAX,Math.max(MIN,is*(d/id)));applyScale();updateLabel();}},{passive:true});
-  })();
+    list.appendChild(card);
+    if (i === 0) card.classList.add('open');
+  });
+}
 
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeLightbox(); });
+function toggleNotice(card) {
+  card.classList.toggle('open');
+}
 
-  init();
+/* ════════════════════════════
+   LIGHTBOX
+════════════════════════════ */
+const STEP=0.25, MIN=0.25, MAX=4;
+let lbScale=1, lbBase=0;
+
+function openLightbox(c) {
+  const img = document.getElementById('lbImg');
+  img.src = c.image;
+  const nameHtml = c.link
+    ? `<a href="${esc(c.link)}" target="_blank" rel="noopener" style="color:var(--gold-light);text-decoration:none">${esc(c.name)} ↗</a>`
+    : esc(c.name);
+  document.getElementById('lbCaption').innerHTML =
+    nameHtml + (c.type ? `<span>${esc(c.type)}</span>` : '');
+  img.onload = () => { lbScale=1; fitImage(); updateLabel(); };
+  if (img.complete && img.naturalWidth) { lbScale=1; fitImage(); updateLabel(); }
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function fitImage() {
+  const vp=document.getElementById('lbViewport'), img=document.getElementById('lbImg');
+  lbBase = (img.naturalWidth||800) * Math.min((vp.clientWidth-40)/(img.naturalWidth||800), (vp.clientHeight-40)/(img.naturalHeight||600), 1);
+  applyScale();
+}
+function applyScale() { document.getElementById('lbImg').style.width = (lbBase*lbScale)+'px'; }
+function updateLabel() { document.getElementById('lbScaleLabel').textContent = Math.round(lbScale*100)+'%'; }
+function zoomBy(d) { lbScale=Math.min(MAX,Math.max(MIN,lbScale+d)); applyScale(); updateLabel(); }
+function resetZoom() { lbScale=1; applyScale(); updateLabel(); const vp=document.getElementById('lbViewport'); vp.scrollTop=0; vp.scrollLeft=0; }
+function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow=''; lbScale=1; }
+
+document.getElementById('lbZoomIn') .addEventListener('click',()=>zoomBy(+STEP));
+document.getElementById('lbZoomOut').addEventListener('click',()=>zoomBy(-STEP));
+document.getElementById('lbReset')  .addEventListener('click',resetZoom);
+document.getElementById('lbViewport').addEventListener('wheel',e=>{ e.preventDefault(); zoomBy(e.deltaY<0?+STEP:-STEP); },{passive:false});
+
+(() => {
+  const vp=document.getElementById('lbViewport');
+  let drag=false,sx,sy,sl,st;
+  vp.addEventListener('mousedown',e=>{drag=true;vp.classList.add('dragging');sx=e.clientX;sy=e.clientY;sl=vp.scrollLeft;st=vp.scrollTop;});
+  window.addEventListener('mousemove',e=>{if(!drag)return;vp.scrollLeft=sl-(e.clientX-sx);vp.scrollTop=st-(e.clientY-sy);});
+  window.addEventListener('mouseup',()=>{drag=false;vp.classList.remove('dragging');});
+  let t0; vp.addEventListener('touchstart',e=>{if(e.touches.length===1){t0=e.touches[0];sl=vp.scrollLeft;st=vp.scrollTop;}},{passive:true});
+  vp.addEventListener('touchmove',e=>{if(e.touches.length===1&&t0){vp.scrollLeft=sl-(e.touches[0].clientX-t0.clientX);vp.scrollTop=st-(e.touches[0].clientY-t0.clientY);}},{passive:true});
+  let id=0,is=1;
+  vp.addEventListener('touchstart',e=>{if(e.touches.length===2){id=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);is=lbScale;}},{passive:true});
+  vp.addEventListener('touchmove',e=>{if(e.touches.length===2){const d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);lbScale=Math.min(MAX,Math.max(MIN,is*(d/id)));applyScale();updateLabel();}},{passive:true});
+})();
+
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeLightbox(); });
+
+/* ════════════════════════════
+   BOOT
+════════════════════════════ */
+loadChars();
+loadNotices();
 </script>
 </body>
 </html>
