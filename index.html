@@ -368,15 +368,14 @@
 
     .notice-body {
       overflow: hidden;
-      max-height: 0; transition: max-height .3s ease, padding .3s ease;
+      max-height: 0;
+      transition: max-height .35s ease, padding .3s ease, border-color .3s;
       padding: 0 16px;
-      border-top: 0px solid var(--border);
+      border-top: 1px solid transparent;
     }
     .notice-card.open .notice-body {
-      max-height: 600px;
-      padding: 0 16px 16px;
-      border-top: 1px solid var(--border);
-      padding-top: 14px;
+      padding: 14px 16px 16px;
+      border-top-color: var(--border);
     }
     .notice-content {
       font-size: 13px; line-height: 1.9;
@@ -809,12 +808,28 @@ function renderNotices() {
       </div>`;
 
     list.appendChild(card);
-    if (i === 0) card.classList.add('open');
+    if (i === 0) {
+      card.classList.add('open');
+      const body = card.querySelector('.notice-body');
+      body.style.maxHeight = 'none';
+    }
   });
 }
 
 function toggleNotice(card) {
-  card.classList.toggle('open');
+  const body = card.querySelector('.notice-body');
+  const isOpen = card.classList.contains('open');
+  if (isOpen) {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(() => { body.style.maxHeight = '0'; });
+    card.classList.remove('open');
+  } else {
+    card.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    body.addEventListener('transitionend', () => {
+      if (card.classList.contains('open')) body.style.maxHeight = 'none';
+    }, { once: true });
+  }
 }
 
 /* ════════════════════════════
